@@ -24,25 +24,30 @@ class SitemapServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		if (is_dir(base_path() . '/resources/views/wi/sitemap')) {
-			$this->loadViewsFrom(base_path() . '/resources/views/wi/sitemap', 'sitemap');
 
+		if (is_dir(base_path() . '/resources/views/admin/sitemap')) {
+			//load from resource
+			$this->loadViewsFrom(base_path() . '/resources/views/admin/sitemap', 'sitemap');
 		} else {
+			//load from package
 			$this->loadViewsFrom(__DIR__.'/views', 'sitemap');
 		}
+
+
+
 		if (!$this->app->routesAreCached()) {
 			$this->setupRoutes($this->app->router);
 		}
 
 		config([
-			'config/sitemap.php',
+			'config/wi/sitemap.php',
 		]);
-
 
 		$this->publishes([
-			__DIR__.'/views' => base_path('resources/views/wi/sitemap'),
-			__DIR__.'/config/sitemap.php' => config_path('sitemap.php')
-		]);
+			__DIR__.'/views' => base_path('resources/views/admin/sitemap'),
+			__DIR__.'/config/sitemap.php' => config_path('wi/sitemap.php')
+		],'sitemap');
+
 	}
 
 	/**

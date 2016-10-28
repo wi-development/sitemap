@@ -31,11 +31,11 @@ class Category extends Model
 	//Categoru hasMany Sitemap
     public function sitemap()
     {
-        return $this->hasMany('App\Sitemap', 'role_id', 'id');
+        return $this->hasMany('WI\Sitemap\Sitemap', 'role_id', 'id');
     }
 
     public function translation()
     {
-        return $this->hasOne('App\SitemapTranslation','sitemap_id','sitemap_category_id')->where('locale_id',config('app.locale_id'));
+        return $this->hasOne('WI\Sitemap\SitemapTranslation','sitemap_id','sitemap_category_id')->where('locale_id',config('app.locale_id'));
     }
 }

@@ -121,7 +121,6 @@
     <link href="https://cdn.datatables.net/t/bs/dt-1.10.11,rr-1.1.1/datatables.min.css" rel="stylesheet">
 @endsection
 
-
 @section('scripts.footer')
 
     <!--<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
@@ -129,6 +128,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11,rr-1.1.1/datatables.min.js"></script>
     -->
     <script type="text/javascript" src="/js/wi/datatables/datatables-tonny.js"></script>
+    <script type="text/javascript" src="/themes/nifty-2.4.1/vendor/bootbox/bootbox.min.js"></script>
     <!--<script src="/js/dashboard.js"></script>-->
     <script src="/js/wi-data.js"></script>
     <script>
@@ -159,7 +159,25 @@
                 {data: 'created_at', name: 'sitemaps.created_at',searchable: true,width:'140px' },
                 {data: 'updated_at', name: 'sitemaps.updated_at',searchable: true,width:'140px' },
                 {data: 'action', name: 'action', orderable: false, searchable: false,visible:false}
-            ]
+            ],
+            "language": {
+                "lengthMenu": "Toon _MENU_  items per pagina",
+                "zeroRecords": "Geen items gevonden",
+                //"info": "Toon pagina _PAGE_ van _PAGES_ _TOTAL_",
+                "info" :  "Toon _START_ t/m _END_ van _TOTAL_ items",
+                "infoEmpty": "Geen pagina's beschikbaar",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "paginate": {
+                    "first":      "Eerste",
+                    "last":       "Laatste",
+                    "next":       "Volgende",
+                    "previous":   "Vorige"
+                },
+                //"processing":     "Processing...",
+                "search":         "Zoeken:"
+            },
+            "pageLength":10,
+            "bulkActions":false
         };
         //console.info({!! $tableConfig['customSearchColumnValues'] !!});
         setTable(tableConfig);
@@ -167,3 +185,6 @@
 @endsection
 
 
+@section('aside')
+    @include('dashboard::partials.aside')
+@endsection

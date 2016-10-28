@@ -972,48 +972,6 @@ class DbSitemapRepository extends DbRepository implements SitemapRepositoryInter
 
 
 
-    public function getOnePageData(){
-        $relations = ['template','translation.mediatranslations'];
-        $sitemapList = $this->getOnlineSitemapListIncRelation($relations);
-
-        //get the events
-        $this->setCondition($sitemapList,'template','parent_id','<','2');
-
-
-        $this->isOnline($sitemapList);
-        //$this->isPublishedAndOnline($sitemapList);
-
-        $sitemapList = $sitemapList->orderBy('order_by_number', 'asc');
-        $sitemapList = $sitemapList->get();
-        return $sitemapList;
-        return $sitemapList->pluck('translation.name')->all();
-    }
-
-
-
-    public function getSitemapListByTemplateName($templateName,$extraRelations = []){
-        $relations = ['template','translation.mediatranslations'];
-        $relations= array_merge($relations,$extraRelations);
-        $sitemapList = $this->getOnlineSitemapListIncRelation($relations);
-
-        //get the events
-        $this->setCondition($sitemapList,'template','name','=',''.$templateName.'');
-
-
-        $this->isOnline($sitemapList);
-        //$this->isPublishedAndOnline($sitemapList);
-
-        $sitemapList = $sitemapList->orderBy('order_by_number', 'asc');
-        $sitemapList = $sitemapList->get();
-        $this->groupThisTranslationMediaCollection($sitemapList);
-        return $sitemapList;
-        return $sitemapList->pluck('translation.name')->all();
-    }
-
-
-
-
-
 
 
 
@@ -1196,34 +1154,23 @@ class DbSitemapRepository extends DbRepository implements SitemapRepositoryInter
             }
         }
         $retval .= "</ol>";
-
-
         return $retval;
     }
 
 
-    public function getBreadcrumbForMenuIndexTableAjax($sitemap,$start='start')
-    {
+    public function getBreadcrumbForMenuIndexTableAjax($sitemap,$start='start'){
         $depth = count($sitemap);
         $url = '';
         $start_disabled = "";
         $homepage_disabled = "";
-        $homepage_css = '';
-        $all_css = '';
-        if (((isset($sitemap->id)) && ($sitemap == 0)) || (!(isset($sitemap->id)))){
-            $all_css = 'active';
-        }
-        else{
-            $homepage_css = 'active';
-        }
         //if ($sitemap == 0){
         //    $start_disabled = "";
         //    $homepage_disabled = "disabled";
         //}
 
         $retval = "<ol class=\"breadcrumb form-group\" style=\"display:inline\">";
-        $retval .= "<li><a onclick=\"wiLoad(0)\" class='all ".$all_css."'>".$start."</a></li>";
-        $retval .= "<li><a onclick=\"wiLoad(1)\" class='home ".$homepage_css."'>Homepage</a></li>";
+        $retval .= "<li><a onclick=\"wiLoad(0)\" class='".$start_disabled."'>".$start."</a></li>";
+        $retval .= "<li><a onclick=\"wiLoad(1)\" class='".$homepage_disabled."'>Homepage</a></li>";
         foreach ($sitemap as $key => $breadcrumbItem){
             //last
 

@@ -503,7 +503,8 @@ class SitemapController extends Controller
    */
   public function edit(Request $request)
   {
-    //dc(session('previous_route'));
+    //dc('PACKAGE');
+  	//dc(session('previous_route'));
 
     //dc(session->flash('previous_route_name'));
     //todo post_type nodig, JA DUS VOOR POST REQUEST
@@ -830,7 +831,6 @@ class SitemapController extends Controller
       }
     });
 
-    //return "view";
     return redirect()->back();
   }
 
